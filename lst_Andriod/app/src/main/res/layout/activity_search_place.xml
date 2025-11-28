@@ -39,14 +39,14 @@
     </LinearLayout>
 
     <!-- 地图图片区域 -->
-    <ImageView
+    <!-- 地图区域：使用高德 MapView -->
+    <com.amap.api.maps.MapView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:src="@android:drawable/ic_menu_mapmode"
-        android:contentDescription="地图"
         android:layout_margin="16dp"
         android:background="#E0E0E0" />
+
 
     <!-- 搜索栏 -->
     <LinearLayout

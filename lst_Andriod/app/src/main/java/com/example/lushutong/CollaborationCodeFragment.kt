@@ -15,7 +15,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
+import com.llw.newmapdemo.R
 class CollaborationCodeFragment : BottomSheetDialogFragment() {
 
     private lateinit var ivBack: ImageView

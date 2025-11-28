@@ -10,7 +10,7 @@ import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-
+import com.llw.newmapdemo.R
 // 左侧个人信息弹窗 Fragment
 class ProfileSideDialogFragment : DialogFragment() {
 

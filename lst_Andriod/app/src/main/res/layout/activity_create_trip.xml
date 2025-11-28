@@ -44,28 +44,18 @@
     </LinearLayout>
 
     <!-- 地图区域 -->
+    <!-- 地图区域：使用高德 MapView -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp">
 
-        <ImageView
+        <com.amap.api.maps.MapView
+            android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_mapmode"
-            android:contentDescription="地图" />
+            android:layout_height="match_parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="#FF4081"
-            android:padding="4dp"
-            android:text="287"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:elevation="2dp" />
     </RelativeLayout>
+
 
     <!-- 行程规划区域 -->
     <LinearLayout

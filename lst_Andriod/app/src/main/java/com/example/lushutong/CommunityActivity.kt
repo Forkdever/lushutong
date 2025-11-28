@@ -11,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
+import com.llw.newmapdemo.R
 class CommunityActivity : AppCompatActivity() {
     private lateinit var rvPosts: RecyclerView
     private lateinit var postAdapter: PostAdapter

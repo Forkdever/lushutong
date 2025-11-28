@@ -1,5 +1,6 @@
 package com.example.lushutong
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +15,15 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.Calendar
+import com.llw.newmapdemo.R
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.activity.result.contract.ActivityResultContract;
+import com.amap.api.services.core.PoiItem
+import com.amap.api.maps.MapView
+
+import com.llw.newmapdemo.TravelMapController
+
 
 // 待安排地点数据类
 data class PendingPlace(
@@ -87,6 +97,12 @@ class CreateTripActivity : AppCompatActivity() {
     private lateinit var rvPendingPlaces: RecyclerView // 正确声明
     private var dayCount = 1
 
+    // ⭐ 新增：地图 & 控制器
+    private lateinit var mapView: MapView
+    private lateinit var mapController: TravelMapController
+    private lateinit var searchPlaceLauncher: ActivityResultLauncher<Intent>
+
+
     // 待安排地点数据源
     private val pendingPlaceList = mutableListOf<PendingPlace>()
     private lateinit var pendingAdapter: PendingPlaceAdapter
@@ -101,8 +117,51 @@ class CreateTripActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_trip)
         initViews()
+        // ⭐ 新增：初始化地图控制器
+        mapController = TravelMapController(this, mapView)
+        mapController.onCreate(savedInstanceState)
         initPendingRecyclerView()
         initEvents()
+
+        // 注册 ActivityResultLauncher，接收 SearchPlaceActivity 的返回值
+        searchPlaceLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data = result.data ?: return@registerForActivityResult
+
+                // 取出选中的 POI 列表（在 SearchPlaceActivity 里 putParcelableArrayListExtra 的）
+                val selectedPois: ArrayList<PoiItem>? =
+                    data.getParcelableArrayListExtra("selected_pois")
+
+                if (!selectedPois.isNullOrEmpty()) {
+
+                    selectedPois.forEach { poi ->
+                        // ① 加到地图上
+                        mapController.addScenicFromPoi(poi)
+
+                        // ② 加到“待安排”列表
+                        pendingPlaceList.add(
+                            PendingPlace(
+                                name = poi.title ?: "",
+                                address = poi.snippet ?: "",
+                                rating = "",
+                                tag1 = poi.typeDes ?: "",
+                                tag2 = poi.cityName ?: ""
+                            )
+                        )
+                    }
+
+                    pendingAdapter.notifyDataSetChanged()
+                    updateOverviewPending()
+                    selectTab(R.id.tab_pending)
+                    Toast.makeText(this, "已添加${selectedPois.size}个地点", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
+
+
     }
 
     private fun initViews() {
@@ -114,6 +173,7 @@ class CreateTripActivity : AppCompatActivity() {
         itineraryPendingHint = findViewById(R.id.itinerary_pending_hint)
         rvPendingPlaces = findViewById(R.id.rv_pending_places) // 正确初始化
 
+        mapView = findViewById(R.id.mapView)
         // 初始选中总览
         selectTab(R.id.tab_overview)
     }
@@ -177,17 +237,17 @@ class CreateTripActivity : AppCompatActivity() {
 
         // 添加行程项（跳转到搜索页面）
         findViewById<ImageView>(R.id.iv_add_item).setOnClickListener {
-            startActivityForResult(
-                Intent(this, SearchPlaceActivity::class.java),
-                1001
-            )
+            val intent = Intent(this, SearchPlaceActivity::class.java)
+            searchPlaceLauncher.launch(intent)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
+
 
         // 标签点击事件
         setupInitialTabClicks()
     }
 
+    /*
     // 接收搜索页面返回的地点
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -209,7 +269,7 @@ class CreateTripActivity : AppCompatActivity() {
             selectTab(R.id.tab_pending)
             Toast.makeText(this, "已添加${pendingPlaceList.size}个地点", Toast.LENGTH_SHORT).show()
         }
-    }
+    }*/
 
     // 更新总览中的待安排显示
     private fun updateOverviewPending() {
@@ -417,4 +477,33 @@ class CreateTripActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tab_day_1).setOnClickListener { selectTab(R.id.tab_day_1) }
         findViewById<TextView>(R.id.tab_pending).setOnClickListener { selectTab(R.id.tab_pending) }
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (::mapController.isInitialized) {
+            mapController.onResume()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (::mapController.isInitialized) {
+            mapController.onPause()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (::mapController.isInitialized) {
+            mapController.onDestroy()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (::mapController.isInitialized) {
+            mapController.onSaveInstanceState(outState)
+        }
+    }
+
 }

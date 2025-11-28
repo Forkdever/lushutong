@@ -11,7 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-
+import com.llw.newmapdemo.R
 class MainActivity : AppCompatActivity(), ProfileSideDialogFragment.OnProfileInteractionListener {
     // 登录结果回调
     private lateinit var loginResultLauncher: ActivityResultLauncher<Intent>

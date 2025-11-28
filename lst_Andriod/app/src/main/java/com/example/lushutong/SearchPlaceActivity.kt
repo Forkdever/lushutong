@@ -14,7 +14,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.io.Serializable
+import com.llw.newmapdemo.R
 
+import com.amap.api.maps.MapView
+import com.amap.api.services.core.PoiItem
+import com.llw.newmapdemo.TravelMapController
 // 地点数据类
 data class PlaceItem(
     val id: Int,
@@ -25,6 +29,7 @@ data class PlaceItem(
     val tag2: String,
     var isSelected: Boolean = false
 ) : Serializable
+
 
 // 地点列表适配器
 class PlaceAdapter(
@@ -66,31 +71,39 @@ class PlaceAdapter(
     fun getSelectedPlaces(): List<PlaceItem> = items.filter { it.isSelected }
 }
 
-class SearchPlaceActivity : AppCompatActivity() {
+
+
+class SearchPlaceActivity : AppCompatActivity(),
+    TravelMapController.OnPoiSearchResultListener{
     private lateinit var placeList: MutableList<PlaceItem>
     private lateinit var adapter: PlaceAdapter
+
+    // 新增：
+    private lateinit var mapView: MapView
+    private lateinit var mapController: TravelMapController
+    private val poiList: MutableList<PoiItem> = mutableListOf()   // 保存真实的 POI 数据
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_place)
 
-        // 初始化控件
+        // 1. 初始化控件
         val etSearch = findViewById<EditText>(R.id.et_search)
         val ivSearch = findViewById<ImageView>(R.id.iv_search)
         val rvPlaces = findViewById<RecyclerView>(R.id.rv_places)
         val btnAdd = findViewById<Button>(R.id.btn_add)
         val ivBack = findViewById<ImageView>(R.id.iv_back)
 
-        // 测试数据
-        placeList = mutableListOf(
-            PlaceItem(1, "故宫博物院", "北京市东城区景山前街4号", "★★★★★ 4.9", "历史古迹", "5A景区"),
-            PlaceItem(2, "上海迪士尼乐园", "上海市浦东新区川沙新镇", "★★★★☆ 4.7", "主题乐园", "亲子"),
-            PlaceItem(3, "杭州西湖", "杭州市西湖区西湖街道", "★★★★★ 4.8", "自然景观", "免费"),
-            PlaceItem(4, "成都大熊猫基地", "成都市成华区熊猫大道1375号", "★★★★☆ 4.7", "动物园", "亲子"),
-            PlaceItem(5, "西安兵马俑", "西安市临潼区秦陵北路", "★★★★★ 4.8", "历史古迹", "5A景区")
-        )
+        // 新增：MapView & Controller
+        mapView = findViewById(R.id.mapView)
+        mapController = TravelMapController(this, mapView)
+        mapController.setOnPoiSearchResultListener(this)   // 注册搜索结果回调
+        mapController.onCreate(savedInstanceState)         // 把生命周期传进去
 
-        // 设置适配器
+        // 暂时不再使用“测试数据”，这里先给一个空列表
+        placeList = mutableListOf()
+
         adapter = PlaceAdapter(placeList) { position ->
             placeList[position].isSelected = !placeList[position].isSelected
             adapter.notifyItemChanged(position)
@@ -101,20 +114,41 @@ class SearchPlaceActivity : AppCompatActivity() {
         // 搜索按钮
         ivSearch.setOnClickListener {
             val keyword = etSearch.text.toString().trim()
-            Toast.makeText(this, "搜索：$keyword", Toast.LENGTH_SHORT).show()
+            if (keyword.isEmpty()) {
+                Toast.makeText(this, "请输入搜索关键词", Toast.LENGTH_SHORT).show()
+            } else {
+                // 使用 TravelMapController 做 POI 搜索（城市先传 null，用当前定位城市）
+                mapController.searchPoi(keyword, null)
+            }
         }
 
         // 添加按钮
         btnAdd.setOnClickListener {
-            val selected = adapter.getSelectedPlaces()
-            if (selected.isEmpty()) {
+            val selectedIndexList = placeList
+                .mapIndexedNotNull { index, item -> if (item.isSelected) index else null }
+
+            if (selectedIndexList.isEmpty()) {
                 Toast.makeText(this, "请选择地点", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            // 1. 把选中的 POI 加到地图上（作为景点）
+            selectedIndexList.forEach { idx ->
+                val poi = poiList[idx]
+                mapController.addScenicFromPoi(poi)
+            }
+
+            // 2. 同时把选中的 POI 回传给上一个页面（用 PoiItem，里面自带经纬度）
+            val selectedPois = ArrayList<PoiItem>()
+            selectedIndexList.forEach { idx ->
+                selectedPois.add(poiList[idx])
+            }
+
             Intent().apply {
-                putExtra("selected_places", ArrayList(selected))
+                putParcelableArrayListExtra("selected_pois", selectedPois)
                 setResult(RESULT_OK, this)
             }
+
             finish()
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
@@ -122,4 +156,62 @@ class SearchPlaceActivity : AppCompatActivity() {
         // 返回按钮
         ivBack.setOnClickListener { finish() }
     }
+
+    override fun onPoiResult(poiItems: List<PoiItem>) {
+        // 这个回调在 TravelMapController.onPoiSearched 里调用
+        // 切回主线程更新 UI
+        runOnUiThread {
+            if (poiItems.isEmpty()) {
+                Toast.makeText(this, "未找到相关地点", Toast.LENGTH_SHORT).show()
+                placeList.clear()
+                poiList.clear()
+                adapter.notifyDataSetChanged()
+                return@runOnUiThread
+            }
+
+            // 保存真实 POI 数据
+            poiList.clear()
+            poiList.addAll(poiItems)
+
+            // 把 POI 转成列表展示用的 PlaceItem
+            placeList.clear()
+            poiItems.forEachIndexed { index, poi ->
+                placeList.add(
+                    PlaceItem(
+                        id = index,
+                        name = poi.title ?: "未知地点",
+                        address = poi.snippet ?: "",
+                        rating = "",                      // 这里你可以根据 poi 的别的字段填充评分
+                        tag1 = poi.typeDes ?: "",         // POI 类型描述
+                        tag2 = poi.cityName ?: "",        // 城市名等
+                        isSelected = false
+                    )
+                )
+            }
+
+            adapter.notifyDataSetChanged()
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        mapController.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapController.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapController.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapController.onSaveInstanceState(outState)
+    }
+
+
+
 }

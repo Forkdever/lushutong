@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
+import com.llw.newmapdemo.R
 // 类继承 BottomSheetDialogFragment（核心，实现部分覆盖弹窗）
 class PostBottomSheetFragment : BottomSheetDialogFragment() {
 

@@ -2,7 +2,7 @@ package com.example.lushutong
 
 import android.content.Context
 import android.content.SharedPreferences
-
+import com.llw.newmapdemo.R
 object LoginStatusManager {
     private const val PREF_NAME = "login_status"
     private const val KEY_IS_LOGGED_IN = "is_logged_in"

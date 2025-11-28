@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
+import com.llw.newmapdemo.R
 class CommentAdapter(private val commentList: List<Comment>) :
     RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
 

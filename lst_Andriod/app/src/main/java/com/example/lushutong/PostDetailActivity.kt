@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-
+import com.llw.newmapdemo.R
 class PostDetailActivity : AppCompatActivity() {
     private var isLiked = false
     private var isCollected = false

@@ -1,0 +1,85 @@
+plugins {
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
+}
+
+android {
+    namespace 'com.llw.newmapdemo'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.llw.newmapdemo"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    // 本地libs目录的jar包（如果有需要保留）
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.activity:activity:1.8.0'
+    implementation 'androidx.fragment:fragment:1.6.2'
+    // AndroidX核心库（统一用libs引用，匹配toml配置）
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.activity
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.recyclerview
+
+    // Material Design（仅保留一份，匹配toml）
+    implementation libs.material
+
+    // 导航组件（匹配toml的navigation定义）
+    implementation libs.androidx.navigation.fragment.ktx
+    implementation libs.androidx.navigation.ui.ktx
+
+    // 网络/解析库（匹配toml）
+    implementation libs.gson
+    implementation libs.okhttp
+    implementation libs.volley
+
+    // Markdown渲染（匹配toml）
+    implementation libs.markwon.core
+    implementation libs.core.ktx
+
+    // 测试库（修正第81行错误：用libs.junit而非ext.junit）
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit  // 对应toml里的ext-junit
+    androidTestImplementation libs.espresso.core
+}
