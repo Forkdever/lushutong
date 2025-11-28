@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 根布局透明，用于外部点击判断 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="bottom"
+    android:padding="0dp">
+
+    <!-- 核心卡片区（宽度全屏，高度为屏幕1/2） -->
+<LinearLayout
+android:id="@+id/ll_content"
+android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_fragment_card"
+    android:elevation="10dp"
+    android:padding="24dp"
+    android:layout_marginTop="8dp">
+
+    <!-- 顶部标题栏 -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:gravity="center_vertical"
+android:paddingBottom="16dp">
+
+<!-- 返回按钮（公开系统图标，无权限问题） -->
+<ImageView
+    android:id="@+id/iv_back"
+    android:layout_width="24dp"
+    android:layout_height="24dp"
+    android:contentDescription="返回"
+    android:clickable="true"
+    android:focusable="true" />
+
+<!-- 标题文字 -->
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:text="输入协作码"
+    android:textColor="#2196F3"
+    android:textSize="18sp"
+    android:textStyle="bold" />
+</LinearLayout>
+
+    <!-- 中间内容区 -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+<!-- 协作图标（公开系统图标） -->
+<ImageView
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_marginTop="10dp"
+    android:contentDescription="协作图标" />
+
+<!-- 提示文字 -->
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="请输入您的协作码"
+    android:textColor="#333333"
+    android:textSize="16sp" />
+
+<!-- 协作码输入框 -->
+<EditText
+    android:id="@+id/et_collaboration_code"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/bg_input_code"
+    android:hint="例如: ABCD-1234"
+    android:maxLength="9"
+    android:paddingHorizontal="16dp"
+    android:textColor="#333333"
+    android:textColorHint="#999999"
+    android:textSize="15sp" />
+
+<!-- 确定按钮 -->
+<Button
+    android:id="@+id/btn_confirm"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/bg_btn_blue"
+    android:text="确定"
+    android:textColor="#FFFFFF"
+    android:textSize="16sp" />
+</LinearLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>

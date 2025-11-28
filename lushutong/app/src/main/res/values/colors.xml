@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#2196F3</color>
+    <color name="gray_light">#E0E0E0</color>
+    <color name="green">#4CAF50</color>
+    <color name="purple">#9C27B0</color>
+    <color name="gray">#EEEEEE</color> <!-- 对应 bg_gray 的背景色 -->
+    <color name="text_gray">#999999</color> <!-- 行程待安排文字颜色 -->
+    <color name="yellow">#FFC107</color> <!-- 新增yellow颜色定义 -->
+</resources>

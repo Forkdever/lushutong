@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FA">
+
+    <!-- 顶部标题栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="返回"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="创建行程"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:src="@android:drawable/ic_menu_save"
+            android:contentDescription="保存"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp" />
+    </LinearLayout>
+
+    <!-- 地图区域 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_mapmode"
+            android:contentDescription="地图" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="#FF4081"
+            android:padding="4dp"
+            android:text="287"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:elevation="2dp" />
+    </RelativeLayout>
+
+    <!-- 行程规划区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:padding="16dp"
+        android:layout_marginTop="8dp">
+
+        <!-- 旅行名称输入框 -->
+        <EditText
+            android:id="@+id/et_trip_name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="为您的旅行计划命名"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:background="@drawable/bg_input_code"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            android:maxLines="1"
+            android:inputType="textCapWords" />
+
+        <!-- 出发日期输入框 -->
+        <EditText
+            android:id="@+id/et_trip_date"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="设置出发日期"
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:background="@drawable/bg_input_code"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="20dp"
+            android:inputType="date"
+            android:maxLines="1"
+            android:clickable="true"
+            android:focusable="false" />
+
+        <!-- 天数标签栏 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp">
+
+            <!-- 总览标签 -->
+            <TextView
+                android:id="@+id/tab_overview"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_tab_selected"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:text="总览"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <!-- 可滑动标签容器 -->
+            <HorizontalScrollView
+                android:id="@+id/hs_tabs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scrollbars="none"
+                android:paddingHorizontal="8dp">
+
+                <LinearLayout
+                    android:id="@+id/scrollable_tabs_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- 第一天标签 -->
+                    <TextView
+                        android:id="@+id/tab_day_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_tab_unselected"
+                        android:gravity="center"
+                        android:paddingHorizontal="16dp"
+                        android:text="第1天"
+                        android:textColor="#333333"
+                        android:textSize="14sp"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <!-- 待安排标签 -->
+                    <TextView
+                        android:id="@+id/tab_pending"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_tab_unselected"
+                        android:gravity="center"
+                        android:paddingHorizontal="16dp"
+                        android:text="待安排"
+                        android:textColor="#333333"
+                        android:textSize="14sp"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- 新增天数按钮 -->
+            <ImageView
+                android:id="@+id/iv_add_day"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_tab_unselected"
+                android:src="@android:drawable/ic_input_add"
+                android:contentDescription="添加天数"
+                android:scaleType="center"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <!-- 行程内容区域 -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:id="@+id/itinerary_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingVertical="8dp">
+
+                <!-- 第一天行程 -->
+                <LinearLayout
+                    android:id="@+id/itinerary_day_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_gray"
+                    android:padding="12dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:tag="tab_day_1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="第一天: "
+                        android:textColor="#333333"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="待安排行程"
+                        android:textColor="#333333"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- 待安排地点列表（关键：添加rv_pending_places的id） -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_pending_places"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="8dp" />
+
+                <!-- 待安排提示 -->
+                <LinearLayout
+                    android:id="@+id/itinerary_pending_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/bg_gray"
+                    android:padding="12dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="暂无安排，点击底部「+」添加行程项"
+                        android:textColor="#666666"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- 底部添加行程项按钮 -->
+        <ImageView
+            android:id="@+id/iv_add_item"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_add_button"
+            android:src="@android:drawable/ic_input_add"
+            android:contentDescription="添加行程项"
+            android:clickable="true"
+            android:focusable="true"
+            android:elevation="4dp" />
+    </LinearLayout>
+
+</LinearLayout>

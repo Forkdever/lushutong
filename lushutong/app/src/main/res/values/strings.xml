@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">lushutong</string>
+    <string name="profile_detail_title">个人信息详情</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

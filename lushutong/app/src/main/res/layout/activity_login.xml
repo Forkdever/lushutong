@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp"
+    android:background="#FFFFFF">
+
+    <!-- 返回按钮（修复：使用公开的drawable） -->
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="8dp"
+        android:src="@android:drawable/ic_media_previous"
+        android:contentDescription="返回"
+        android:layout_marginTop="16dp"
+        android:clickable="true"/>
+
+    <!-- 标题 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="40dp"
+        android:text="密码登录"
+        android:textColor="#333333"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <!-- 手机号输入框 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/et_bg_normal"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+86"
+            android:textColor="#333333"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="12dp"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="24dp"
+            android:background="#EEEEEE"/>
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入手机号码"
+            android:inputType="phone"
+            android:background="@null"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="16sp"
+            android:maxLength="11"/>
+    </LinearLayout>
+
+    <!-- 验证码输入框和获取按钮（修复：直接设置背景颜色） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/et_bg_normal">
+
+        <EditText
+            android:id="@+id/et_verify_code"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入密码"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <!-- 登录按钮（修复：直接设置背景颜色） -->
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="登录"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:background="#CCCCCC"
+        android:layout_marginTop="40dp"
+        android:enabled="false"/>
+
+    <!-- 辅助链接（修复：使用LinearLayout的weight实现space-between） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/tv_forgot_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="忘记密码"
+            android:textColor="#2196F3"
+            android:textSize="14sp"
+            android:gravity="end"
+            android:clickable="true"/>
+    </LinearLayout>
+
+    <!-- 协议说明（修复：移除auto margin） -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="登录即同意《用户服务协议》和《隐私政策》"
+        android:textColor="#999999"
+        android:textSize="12sp"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center">
+
+        <requestFocus/>
+    </TextView>
+</LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"> <!-- 明确矩形形状 -->
+
+    <!-- 按钮填充色（可替换为你的颜色，如 @color/red、#FF6700） -->
+    <solid android:color="@color/black" />
+
+    <!-- 直角：radius 设为 0dp -->
+    <corners android:radius="0dp" />
+
+    <!-- 边框（关键修正：属性后加 / 自闭合，避免语法错误） -->
+    <stroke android:width="2dp"
+    android:color="@color/black" /> <!-- 边框颜色，结尾必须是 /> -->
+
+</shape>

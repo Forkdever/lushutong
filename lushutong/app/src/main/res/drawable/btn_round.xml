@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="@color/black" /> <!-- 填充色 -->
+    <corners android:radius="20dp" />     <!-- 圆角半径 -->
+
+    <!-- 边框（修正：结尾用 /> 自闭合） -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/black" />
+
+</shape>

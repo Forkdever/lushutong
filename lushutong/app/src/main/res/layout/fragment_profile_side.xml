@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="16dp"> <!-- 整体内边距，避免内容贴边 -->
+
+    <!-- 1. 顶部用户信息区 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="12dp">
+
+        <!-- 1.1 用户头像 -->
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/bg"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg"
+            android:contentDescription="用户头像" />
+
+        <!-- 1.2 用户名+手机号（垂直排列） -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
+
+            <!-- 用户名 -->
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张娜"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <!-- 手机号（中间用*隐藏） -->
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="138****3801"
+                android:textSize="14sp"
+                android:textColor="@color/gray_light" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 分割线：区分用户信息和功能区 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light" /> <!-- 浅灰色分割线 -->
+
+    <!-- 2. 中间功能选项区（垂直排列3个选项） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"> <!-- 与分割线间距 -->
+
+        <!-- 2.1 我的旅行计划（蓝色图标+文字） -->
+        <LinearLayout
+            android:id="@+id/ll_my_trips"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <!-- 蓝色图标 -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/bg"
+                android:tint="@color/blue" />
+
+            <!-- 文字 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="我的旅行计划"
+                android:textSize="16sp"
+                android:textColor="@color/blue" />
+
+        </LinearLayout>
+
+        <!-- 2.2 已发布的旅行日志（绿色图标+文字） -->
+        <LinearLayout
+            android:id="@+id/ll_published_logs"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <!-- 绿色图标 -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/bg"
+                android:tint="@color/green" />
+
+            <!-- 文字 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="已发布的旅行日志"
+                android:textSize="16sp"
+                android:textColor="@color/green" /> <!-- 文字绿色 -->
+
+        </LinearLayout>
+
+        <!-- 2.3 未发布的旅行日志（紫色图标+文字） -->
+        <LinearLayout
+            android:id="@+id/ll_unpublished_logs"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <!-- 紫色图标 -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/bg"
+                android:tint="@color/purple" />
+
+            <!-- 文字 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="未发布的旅行日志"
+                android:textSize="16sp"
+                android:textColor="@color/purple" /> <!-- 文字紫色 -->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 3. 底部退出登录（推到最底部） -->
+    <TextView
+        android:id="@+id/tv_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="24dp"
+        android:text="退出登录"
+        android:textSize="16sp"
+        android:textColor="@color/blue"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        android:layout_marginTop="80dp"
+        android:background="?attr/selectableItemBackground" /> <!-- 点击反馈 -->
+
+</LinearLayout>
