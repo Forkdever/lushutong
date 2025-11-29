@@ -184,6 +184,7 @@
 
         <!-- 行程内容区域（滚动容器） -->
         <ScrollView
+            android:id="@+id/itinerary_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -197,32 +198,6 @@
                 android:paddingVertical="8dp">
 
                 <!-- 第一天行程项 -->
-                <LinearLayout
-                    android:id="@+id/itinerary_day_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_gray"
-                    android:padding="12dp"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:tag="tab_day_1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="第一天: "
-                        android:textColor="#333333"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="待安排行程"
-                        android:textColor="#333333"
-                        android:textSize="14sp" />
-                </LinearLayout>
 
                 <!-- 待安排地点列表（RecyclerView） -->
                 <androidx.recyclerview.widget.RecyclerView
@@ -254,19 +229,45 @@
             </LinearLayout>
         </ScrollView>
 
-        <!-- 底部添加行程项按钮 -->
-        <ImageView
-            android:id="@+id/iv_add_item"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:background="@drawable/bg_add_button"
-            android:src="@android:drawable/ic_input_add"
-            android:contentDescription="添加行程项"
-            android:clickable="true"
-            android:focusable="true"
-            android:elevation="4dp" />
-    </LinearLayout>
+        <!-- 底部按钮容器（新增：包含左下角和右下角按钮） -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal">
 
+            <!-- 左下角按钮：显示旅行计划 -->
+            <ImageView
+                android:id="@+id/iv_show_markdown"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_add_button"
+                android:contentDescription="显示旅行计划"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="4dp"
+                android:scaleType="center"
+                android:src="@android:drawable/ic_menu_view" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <!-- 右下角按钮：添加行程项（原有） -->
+            <ImageView
+                android:id="@+id/iv_add_item"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_add_button"
+                android:contentDescription="添加行程项"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="4dp"
+                android:scaleType="center"
+                android:src="@android:drawable/ic_input_add" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

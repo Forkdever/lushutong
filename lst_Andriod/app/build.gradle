@@ -96,6 +96,7 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2' // 匹配Java 8的版本
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "io.noties.markwon:core:4.6.2"
 
     // 测试依赖
     testImplementation libs.junit
