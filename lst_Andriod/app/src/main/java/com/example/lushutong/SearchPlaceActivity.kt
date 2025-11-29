@@ -118,7 +118,7 @@ class SearchPlaceActivity : AppCompatActivity(),
                 Toast.makeText(this, "请输入搜索关键词", Toast.LENGTH_SHORT).show()
             } else {
                 // 使用 TravelMapController 做 POI 搜索（城市先传 null，用当前定位城市）
-                mapController.searchPoi(keyword, null)
+                mapController.searchPoi(keyword, "北京")
             }
         }
 

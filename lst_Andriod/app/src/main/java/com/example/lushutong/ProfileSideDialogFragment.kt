@@ -48,8 +48,8 @@ class ProfileSideDialogFragment : DialogFragment() {
 
         // 退出登录
         view.findViewById<TextView>(R.id.tv_logout).setOnClickListener {
-            // 清除登录状态
-            LoginStatusManager.clearLoginStatus()
+            // 清除登录状态（调用LoginStatusManager中定义的logout方法）
+            LoginStatusManager.logout()
             Toast.makeText(requireContext(), "已退出登录", Toast.LENGTH_SHORT).show()
             dismiss()
 

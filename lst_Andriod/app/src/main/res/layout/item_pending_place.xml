@@ -4,79 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="12dp"
-    android:gravity="center_vertical"
-    android:background="@drawable/bg_gray"
-    android:layout_marginBottom="8dp">
-
-    <!-- 图片占位 -->
-    <ImageView
-        android:id="@+id/iv_place"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@android:drawable/ic_menu_gallery"
-        android:scaleType="centerCrop"
-        android:contentDescription="地点图片" />
-
-    <!-- 信息区域 -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginStart="12dp">
-
-        <TextView
-            android:id="@+id/tv_place_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_place_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_gray"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp">
-
-            <TextView
-                android:id="@+id/tv_place_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/yellow"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_tag1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:background="@color/blue"
-                android:paddingHorizontal="4dp"
-                android:paddingVertical="1dp"
-                android:layout_marginStart="4dp" />
-
-            <TextView
-                android:id="@+id/tv_tag2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:background="@color/green"
-                android:paddingHorizontal="4dp"
-                android:paddingVertical="1dp"
-                android:layout_marginStart="4dp" />
-        </LinearLayout>
-    </LinearLayout>
+    android:background="@drawable/bg_gray">
 
     <!-- 拖动图标 -->
     <ImageView
@@ -84,5 +12,82 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@android:drawable/ic_menu_sort_by_size"
-        android:contentDescription="拖动排序" />
+        android:contentDescription="拖动排序"
+        android:layout_gravity="center_vertical"/>
+
+    <!-- 地点信息容器 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp">
+
+        <!-- 地点名称 -->
+        <TextView
+            android:id="@+id/tv_place_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#333333"/>
+
+        <!-- 地点地址 -->
+        <TextView
+            android:id="@+id/tv_place_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:layout_marginTop="4dp"/>
+
+        <!-- 标签容器 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp">
+
+            <!-- 标签1 -->
+            <TextView
+                android:id="@+id/tv_tag1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:background="@drawable/bg_tag"
+                android:paddingVertical="2dp"
+                android:paddingHorizontal="8dp"
+                android:textColor="#475569"/>
+
+            <!-- 标签2 -->
+            <TextView
+                android:id="@+id/tv_tag2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:background="@drawable/bg_tag"
+                android:paddingVertical="2dp"
+                android:paddingHorizontal="8dp"
+                android:textColor="#475569"
+                android:layout_marginStart="4dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 评分 -->
+    <TextView
+        android:id="@+id/tv_place_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#FF9800"
+        android:layout_marginEnd="12dp"
+        android:layout_gravity="center_vertical"/>
+
+    <!-- 删除按钮 -->
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@android:drawable/ic_menu_delete"
+        android:contentDescription="删除"
+        android:layout_gravity="center_vertical"/>
+
 </LinearLayout>

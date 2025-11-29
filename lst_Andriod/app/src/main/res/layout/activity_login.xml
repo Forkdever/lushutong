@@ -6,7 +6,7 @@
     android:paddingHorizontal="24dp"
     android:background="#FFFFFF">
 
-    <!-- 返回按钮（修复：使用公开的drawable） -->
+    <!-- 返回按钮 -->
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="40dp"
@@ -28,7 +28,7 @@
         android:textSize="28sp"
         android:textStyle="bold" />
 
-    <!-- 手机号输入框 -->
+    <!-- 手机号输入框（ID改为reviseText，匹配LoginController） -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -51,7 +51,7 @@
             android:background="#EEEEEE"/>
 
         <EditText
-            android:id="@+id/et_phone"
+            android:id="@+id/reviseText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="请输入手机号码"
@@ -63,7 +63,7 @@
             android:maxLength="11"/>
     </LinearLayout>
 
-    <!-- 验证码输入框和获取按钮（修复：直接设置背景颜色） -->
+    <!-- 密码输入框（ID改为msg，匹配LoginController） -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -72,7 +72,7 @@
         android:background="@drawable/et_bg_normal">
 
         <EditText
-            android:id="@+id/et_verify_code"
+            android:id="@+id/msg"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
@@ -80,25 +80,52 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入密码"
-            android:inputType="number"
-            android:maxLength="6"
+            android:inputType="textPassword"
+            android:maxLength="20"
             android:textSize="16sp" />
 
     </LinearLayout>
 
-    <!-- 登录按钮（修复：直接设置背景颜色） -->
-    <Button
-        android:id="@+id/btn_login"
+    <!-- 登录按钮（ID改为revise，匹配LoginController） + 注册按钮（新增） -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="登录"
-        android:textSize="18sp"
-        android:textColor="#FFFFFF"
-        android:background="#CCCCCC"
-        android:layout_marginTop="40dp"
-        android:enabled="false"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp">
 
-    <!-- 辅助链接（修复：使用LinearLayout的weight实现space-between） -->
+        <Button
+            android:id="@+id/revise"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="登录"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:background="#CCCCCC" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="注册"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:background="#2196F3"/>
+    </LinearLayout>
+
+    <!-- 用户列表显示（新增，匹配LoginController的tvUserList） -->
+    <TextView
+        android:id="@+id/t1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="14sp"
+        android:textColor="#333333"/>
+
+    <!-- 辅助链接 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,17 +143,15 @@
             android:clickable="true"/>
     </LinearLayout>
 
-    <!-- 协议说明（修复：移除auto margin） -->
+    <!-- 协议说明 -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="登录即同意《用户服务协议》和《隐私政策》"
         android:textColor="#999999"
         android:textSize="12sp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="32dp"
-        android:gravity="center">
+        android:gravity="center"/>
 
-        <requestFocus/>
-    </TextView>
 </LinearLayout>

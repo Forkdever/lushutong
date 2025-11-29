@@ -5,20 +5,26 @@ plugins {
 
 android {
     namespace 'com.llw.newmapdemo'
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.llw.newmapdemo"
         minSdk 24
-        targetSdk 34
+        targetSdk 36
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/native-image/org.mongodb/bson/native-image.properties'
+        exclude 'META-INF/native-image/org.mongodb/mongodb-driver-core/native-image.properties'
+        exclude 'META-INF/native-image/org.mongodb/mongodb-driver-sync/native-image.properties'
+        exclude 'META-INF/INDEX.LIST'
     }
 
     sourceSets {
@@ -37,8 +43,9 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8 // 降级到Java 8（避免Record特性冲突）
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true // 保留Desugaring，但用Java 8
     }
 
     buildFeatures {
@@ -46,40 +53,52 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '1.8' // 匹配Java 8
     }
 }
 
 dependencies {
-    // 本地libs目录的jar包（如果有需要保留）
+    // 本地libs依赖
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation files('libs\\mysql-connector-java-5.1.3.jar')
+
+    // 基础AndroidX依赖
     implementation 'androidx.activity:activity:1.8.0'
     implementation 'androidx.fragment:fragment:1.6.2'
-    // AndroidX核心库（统一用libs引用，匹配toml配置）
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
     implementation libs.androidx.activity
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.recyclerview
-
-    // Material Design（仅保留一份，匹配toml）
     implementation libs.material
-
-    // 导航组件（匹配toml的navigation定义）
     implementation libs.androidx.navigation.fragment.ktx
     implementation libs.androidx.navigation.ui.ktx
-
-    // 网络/解析库（匹配toml）
     implementation libs.gson
     implementation libs.okhttp
     implementation libs.volley
-
-    // Markdown渲染（匹配toml）
     implementation libs.markwon.core
     implementation libs.core.ktx
 
-    // 测试库（修正第81行错误：用libs.junit而非ext.junit）
+    // Retrofit依赖
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // MongoDB依赖：降级到4.6.1 + 排除Record相关模块
+    implementation('org.mongodb:mongodb-driver-sync:4.6.1') {
+        exclude group: 'org.mongodb', module: 'bson-record-codec' // 关键：排除Record编解码器
+        exclude group: 'org.mongodb', module: 'mongodb-driver-core-record-codec'
+    }
+    implementation('org.mongodb:bson:4.6.1') {
+        exclude group: 'org.mongodb', module: 'bson-record-codec'
+    }
+
+    // Core Library Desugaring（保留，兼容其他Java特性）
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2' // 匹配Java 8的版本
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // 测试依赖
     testImplementation libs.junit
-    androidTestImplementation libs.ext.junit  // 对应toml里的ext-junit
+    androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 }

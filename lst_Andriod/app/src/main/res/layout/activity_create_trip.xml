@@ -21,7 +21,8 @@
             android:contentDescription="返回"
             android:clickable="true"
             android:focusable="true"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:src="@android:drawable/ic_media_previous" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,19 +33,24 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
         <ImageView
+            android:id="@+id/iv_save"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
-            android:src="@android:drawable/ic_menu_save"
             android:contentDescription="保存"
             android:clickable="true"
             android:focusable="true"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:src="@android:drawable/ic_menu_save" />
     </LinearLayout>
 
-    <!-- 地图区域 -->
-    <!-- 地图区域：使用高德 MapView -->
+    <!-- 地图区域：高德 MapView -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp">
@@ -53,9 +59,7 @@
             android:id="@+id/mapView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </RelativeLayout>
-
 
     <!-- 行程规划区域 -->
     <LinearLayout
@@ -178,7 +182,7 @@
                 android:focusable="true" />
         </LinearLayout>
 
-        <!-- 行程内容区域 -->
+        <!-- 行程内容区域（滚动容器） -->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -192,7 +196,7 @@
                 android:orientation="vertical"
                 android:paddingVertical="8dp">
 
-                <!-- 第一天行程 -->
+                <!-- 第一天行程项 -->
                 <LinearLayout
                     android:id="@+id/itinerary_day_1"
                     android:layout_width="match_parent"
@@ -220,7 +224,7 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- 待安排地点列表（关键：添加rv_pending_places的id） -->
+                <!-- 待安排地点列表（RecyclerView） -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_pending_places"
                     android:layout_width="match_parent"
@@ -228,7 +232,7 @@
                     android:visibility="gone"
                     android:layout_marginTop="8dp" />
 
-                <!-- 待安排提示 -->
+                <!-- 待安排提示区域 -->
                 <LinearLayout
                     android:id="@+id/itinerary_pending_hint"
                     android:layout_width="match_parent"
