@@ -1,276 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="#E6F7F0"> <!-- 统一浅青绿背景 -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="32dp">
 
-        <!-- 标题区域 -->
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- 标题区域（带分割线） -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="旅行需求定制"
-            android:textColor="#1E40AF"
-            android:textSize="22sp"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="旅行需求定制"
+                android:textColor="#0AB4A0"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="请填写您的旅行需求"
-            android:textColor="#64748B"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="请填写您的旅行需求，我们将为您定制专属行程"
+                android:textColor="#4A6572"
             android:textSize="14sp" />
 
-        <!-- 旅行出发地 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/bg_input"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="16dp">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"/>
-
-            <EditText
-                android:id="@+id/et_departure"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
-                android:background="@null"
-                android:hint="例如：北京、上海、广州"
-                android:textColorHint="#94A3B8"
-                android:inputType="text"
-                android:textSize="15sp" />
+            <View
+                android:layout_width="60dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="12dp"
+                android:background="#0AB4A0" />
         </LinearLayout>
 
-        <!-- 旅行目的地 -->
+        <!-- 旅行出发地（带图标） -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_input"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="16dp">
+            android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_input_layout"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"/>
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@android:drawable/ic_menu_mylocation"
+            android:tint="#0AB4A0" /> <!-- 主色图标 -->
 
-            <EditText
-                android:id="@+id/et_destination"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
-                android:background="@null"
-                android:hint="例如：三亚、丽江、厦门"
-                android:textColorHint="#94A3B8"
-                android:inputType="text"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <!-- 并排日期选择框（出发日期 + 回程日期） -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:spacing="16dp">
-
-            <!-- 出发日期 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_input"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" />
-
-                <EditText
-                    android:id="@+id/et_departure_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
-                    android:background="@null"
-                    android:hint="出发日期"
-                    android:textColorHint="#94A3B8"
-                    android:inputType="none"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <!-- 回程日期 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_input"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" />
-
-                <EditText
-                    android:id="@+id/et_return_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
-                    android:background="@null"
-                    android:hint="回程日期"
-                    android:textColorHint="#94A3B8"
-                    android:inputType="none"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- 个性化需求标题 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="个性化需求"
-            android:textColor="#1E293B"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <!-- 个性化需求标签 -->
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:columnCount="3"
-            android:useDefaultMargins="true">
-
-            <Button
-                android:id="@+id/btn_tag1"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_tag"
-                android:text="体验当地文化"
-                android:textColor="#475569"
-                android:textSize="13sp" />
-
-            <Button
-                android:id="@+id/btn_tag2"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_tag"
-                android:text="购物行程"
-                android:textColor="#475569"
-                android:textSize="13sp" />
-
-            <Button
-                android:id="@+id/btn_tag3"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_tag"
-                android:text="冒险活动"
-                android:textColor="#475569"
-                android:textSize="13sp" />
-
-            <Button
-                android:id="@+id/btn_tag4"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_tag"
-                android:text="奢华体验"
-                android:textColor="#475569"
-                android:textSize="13sp" />
-
-            <Button
-                android:id="@+id/btn_tag5"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_tag"
-                android:text="家庭友好"
-                android:textColor="#475569"
-                android:textSize="13sp" />
-
-            <Button
-                android:id="@+id/btn_tag6"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_tag"
-                android:text="浪漫行程"
-                android:textColor="#475569"
-                android:textSize="13sp" />
-
-            <Button
-                android:id="@+id/btn_tag7"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_tag"
-                android:text="经济实惠"
-                android:textColor="#475569"
-                android:textSize="13sp" />
-
-            <Button
-                android:id="@+id/btn_tag8"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_tag"
-                android:text="无障碍设施"
-                android:textColor="#475569"
-                android:textSize="13sp" />
-
-            <Button
-                android:id="@+id/btn_tag9"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_tag"
-                android:text="自然风光"
-                android:textColor="#475569"
-                android:textSize="13sp" />
-        </GridLayout>
-
-        <!-- 其他需求输入框 -->
         <EditText
-            android:id="@+id/et_other_demand"
+            android:id="@+id/et_departure"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_input"
-            android:hint="请在此输入其他特殊需求..."
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
+            android:background="@null"
+            android:hint="例如：北京、上海、广州"
+            android:textColor="#2D3748"
             android:textColorHint="#94A3B8"
-            android:padding="16dp"
-            android:textSize="15sp" />
+            android:inputType="text"
+            android:textSize="15sp"
+            android:paddingVertical="8dp" />
+    </LinearLayout>
 
-        <!-- 提交按钮 -->
-        <Button
-            android:id="@+id/btn_submit"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="30dp"
-            android:background="?attr/selectableItemBackground"
-            android:text="提交旅行需求"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+    <!-- 旅行目的地 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_input_layout"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
 
-        <!-- 返回按钮 -->
-        <Button
-            android:id="@+id/btn_back"
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@android:drawable/ic_menu_mapmode"
+        android:tint="#0AB4A0" />
+
+        <EditText
+            android:id="@+id/et_destination"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="20dp"
-            android:background="?attr/selectableItemBackground"
-            android:text="返回上一页"
-            android:textColor="#64748B"
-            android:textSize="16sp" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
+            android:background="@null"
+            android:hint="例如：三亚、丽江、厦门"
+            android:textColor="#2D3748"
+            android:textColorHint="#94A3B8"
+            android:inputType="text"
+            android:textSize="15sp"
+            android:paddingVertical="8dp" />
+    </LinearLayout>
+
+    <!-- 并排日期选择框 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:spacing="16dp">
+
+        <!-- 出发日期 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_input_layout"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@android:drawable/ic_menu_today"
+            android:tint="#0AB4A0" />
+
+            <EditText
+                android:id="@+id/et_departure_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:background="@null"
+                android:hint="出发日期"
+                android:textColor="#2D3748"
+                android:textColorHint="#94A3B8"
+                android:inputType="none"
+                android:textSize="15sp"
+                android:paddingVertical="8dp" />
+        </LinearLayout>
+
+        <!-- 回程日期 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_input_layout"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@android:drawable/ic_menu_recent_history"
+            android:tint="#0AB4A0" />
+
+            <EditText
+                android:id="@+id/et_return_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:background="@null"
+                android:hint="回程日期"
+                android:textColor="#2D3748"
+                android:textColorHint="#94A3B8"
+                android:inputType="none"
+                android:textSize="15sp"
+                android:paddingVertical="8dp" />
+        </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+
+    <!-- 个性化需求标题 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="个性化需求"
+        android:textColor="#0AB4A0"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- 个性化需求标签（优化选中样式） -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:columnCount="3"
+        android:useDefaultMargins="true"
+        android:spacing="12dp"> <!-- 增加间距更美观 -->
+
+        <android.widget.Button
+            android:id="@+id/btn_tag1"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_tag_normal"
+            android:text="体验当地文化"
+            android:textColor="#4A6572"
+            android:textSize="13sp"
+            android:paddingHorizontal="16dp" />
+
+        <android.widget.Button
+            android:id="@+id/btn_tag2"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_tag_normal"
+            android:text="购物行程"
+            android:textColor="#4A6572"
+            android:textSize="13sp"
+            android:paddingHorizontal="16dp" />
+
+        <android.widget.Button
+            android:id="@+id/btn_tag3"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_tag_normal"
+            android:text="冒险活动"
+            android:textColor="#4A6572"
+            android:textSize="13sp"
+            android:paddingHorizontal="16dp" />
+
+        <android.widget.Button
+            android:id="@+id/btn_tag4"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_tag_normal"
+            android:text="奢华体验"
+            android:textColor="#4A6572"
+            android:textSize="13sp"
+            android:paddingHorizontal="16dp" />
+
+        <android.widget.Button
+            android:id="@+id/btn_tag5"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_tag_normal"
+            android:text="家庭友好"
+            android:textColor="#4A6572"
+            android:textSize="13sp"
+            android:paddingHorizontal="16dp" />
+
+        <android.widget.Button
+            android:id="@+id/btn_tag6"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_tag_normal"
+            android:text="浪漫行程"
+            android:textColor="#4A6572"
+            android:textSize="13sp"
+            android:paddingHorizontal="16dp" />
+
+        <android.widget.Button
+            android:id="@+id/btn_tag7"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_tag_normal"
+            android:text="经济实惠"
+            android:textColor="#4A6572"
+            android:textSize="13sp"
+            android:paddingHorizontal="16dp" />
+
+        <android.widget.Button
+            android:id="@+id/btn_tag8"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_tag_normal"
+            android:text="无障碍设施"
+            android:textColor="#4A6572"
+            android:textSize="13sp"
+            android:paddingHorizontal="16dp" />
+
+        <android.widget.Button
+            android:id="@+id/btn_tag9"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_tag_normal"
+            android:text="自然风光"
+            android:textColor="#4A6572"
+            android:textSize="13sp"
+            android:paddingHorizontal="16dp" />
+    </GridLayout>
+
+    <!-- 其他需求输入框（圆角+边框） -->
+    <EditText
+        android:id="@+id/et_other_demand"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_input_layout"
+        android:hint="请在此输入其他特殊需求（如饮食禁忌、预算范围等）..."
+        android:textColor="#2D3748"
+        android:textColorHint="#94A3B8"
+        android:padding="16dp"
+        android:textSize="15sp"
+        android:gravity="top" />
+
+    <!-- 提交按钮（渐变主色） -->
+    <android.widget.Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_btn_gradient"
+        android:text="提交旅行需求"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:elevation="2dp" />
+
+    <!-- 返回按钮（浅色背景+主色文字） -->
+    <android.widget.Button
+        android:id="@+id/btn_back"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_btn_outline"
+        android:text="返回上一页"
+        android:textColor="#0AB4A0"
+        android:textSize="16sp" />
+
+</LinearLayout>
+    </ScrollView>

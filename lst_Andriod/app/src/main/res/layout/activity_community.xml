@@ -5,79 +5,104 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FA"
+    android:background="#E6F7F0"
     tools:context=".CommunityActivity">
 
-    <!-- 顶部标题栏 -->
-    <ImageView
-        android:id="@+id/imageView_title_in_Community"
-        android:layout_width="match_parent"
-        android:layout_height="89dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bg"
-        android:clickable="true"/>
+    <!-- 顶部标题栏背景（青绿色主色） -->
+<ImageView
+android:id="@+id/imageView_title_in_Community"
+android:layout_width="match_parent"
+android:layout_height="89dp"
+android:background="#0AB4A0"
+    android:clickable="true"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 用户头像 -->
-    <ImageView
-        android:id="@+id/imageView_user_in_Community"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bg" />
+    <!-- 顶部标题文字：社区（居中显示） -->
+<TextView
+android:id="@+id/tv_community_title"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="社区"
+android:textColor="#FFFFFF"
+android:textSize="22sp"
+android:textStyle="bold"
+app:layout_constraintTop_toTopOf="@+id/imageView_title_in_Community"
+app:layout_constraintBottom_toBottomOf="@+id/imageView_title_in_Community"
+app:layout_constraintStart_toStartOf="@+id/imageView_title_in_Community"
+app:layout_constraintEnd_toEndOf="@+id/imageView_title_in_Community"/>
+
+    <!-- 用户头像（统一样式） -->
+<ImageView
+android:id="@+id/imageView_user_in_Community"
+android:layout_width="50dp"
+android:layout_height="50dp"
+android:layout_marginStart="16dp"
+android:layout_marginTop="16dp"
+android:background="#FFFFFF"
+    android:padding="2dp"
+    android:scaleType="centerCrop"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/bg" />
 
     <!-- 帖子列表（核心新增） -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_posts"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingHorizontal="16dp"
-        android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_title_in_Community"
-        app:layout_constraintBottom_toTopOf="@+id/button_Main_in_Community"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+<androidx.recyclerview.widget.RecyclerView
+android:id="@+id/rv_posts"
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:background="#FFFFFF"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="8dp"
+    android:scrollbars="vertical"
+    app:layout_constraintTop_toBottomOf="@+id/imageView_title_in_Community"
+    app:layout_constraintBottom_toTopOf="@+id/button_Main_in_Community"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 底部按钮 -->
-    <Button
-        android:id="@+id/button_Main_in_Community"
-        android:layout_width="205dp"
-        android:layout_height="92dp"
-        android:background="@drawable/btn_rectangle"
-        android:text="主页"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_Community_in_Community"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!-- 底部主页按钮（青绿色系） -->
+<android.widget.Button
+android:id="@+id/button_Main_in_Community"
+android:layout_width="205dp"
+android:layout_height="92dp"
+android:background="#0AB4A0"
+    android:backgroundTint="@null"
+    android:text="主页"
+    android:textColor="#FFFFFF"
+    android:textSize="16sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/button_Community_in_Community"
+    app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/button_Community_in_Community"
-        android:layout_width="206dp"
-        android:layout_height="92dp"
-        android:background="@drawable/btn_rectangle"
-        android:text="社区"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <!-- 底部社区按钮（高亮青绿色，区分当前页面） -->
+<android.widget.Button
+android:id="@+id/button_Community_in_Community"
+android:layout_width="206dp"
+android:layout_height="92dp"
+android:background="#26A69A"
+    android:backgroundTint="@null"
+    android:text="社区"
+    android:textColor="#FFFFFF"
+    android:textSize="16sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 悬浮按钮 -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="116dp"
-        android:src="@drawable/baseline_add_24"
-        app:backgroundTint="@color/black"
-        app:elevation="6dp"
-        app:fabSize="mini"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:pressedTranslationZ="10dp"
-        app:tint="@color/white" />
+    <!-- 悬浮按钮（青绿色主色） -->
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+android:id="@+id/fab_post"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_marginEnd="28dp"
+android:layout_marginBottom="116dp"
+android:src="@drawable/baseline_add_24"
+android:scaleType="centerCrop"
+app:backgroundTint="#0AB4A0"
+    app:elevation="6dp"
+    app:fabSize="mini"
+    app:pressedTranslationZ="10dp"
+    app:tint="@color/white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

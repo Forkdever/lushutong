@@ -82,7 +82,7 @@ dependencies {
     // Retrofit依赖
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
+    implementation 'com.google.android.material:material:1.11.0'
     // MongoDB依赖：降级到4.6.1 + 排除Record相关模块
     implementation('org.mongodb:mongodb-driver-sync:4.6.1') {
         exclude group: 'org.mongodb', module: 'bson-record-codec' // 关键：排除Record编解码器
@@ -91,9 +91,11 @@ dependencies {
     implementation('org.mongodb:bson:4.6.1') {
         exclude group: 'org.mongodb', module: 'bson-record-codec'
     }
+    //implementation 'org.mongodb:mongodb-driver-reactivestreams:4.6.1'
+    //implementation 'io.projectreactor:reactor-core:3.4.0'
 
     // Core Library Desugaring（保留，兼容其他Java特性）
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2' // 匹配Java 8的版本
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.1' // 匹配Java 8的版本
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation "io.noties.markwon:core:4.6.2"

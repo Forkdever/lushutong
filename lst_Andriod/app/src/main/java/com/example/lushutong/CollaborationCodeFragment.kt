@@ -1,5 +1,6 @@
 package com.example.lushutong
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,12 +17,25 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.llw.newmapdemo.R
+import com.example.plan.TravelPlan
+import com.example.plan.TravelPlanManager
+import com.example.plan.TravelPlanUploader
+
+
 class CollaborationCodeFragment : BottomSheetDialogFragment() {
 
     private lateinit var ivBack: ImageView
     private lateinit var etCode: EditText
     private lateinit var btnConfirm: Button
     private lateinit var llContent: LinearLayout
+
+
+    // 假设Uploader是全局或通过接口获取，这里需根据实际情况初始化
+
+    private val uploader: TravelPlanUploader by lazy {
+        TravelPlanUploader(requireContext()) // 传入 Fragment 绑定的 Context
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,7 +113,64 @@ class CollaborationCodeFragment : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        // 3. 输入框自动格式化（4位+"-"）
+        // 输入框去除自动格式化（PlanId无需加"-"，若PlanId有固定格式可保留）
+        etCode.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                // 移除原有的"-"格式化逻辑，保留输入原样
+            }
+        })
+
+        // 确认按钮：校验PlanId有效性
+        btnConfirm.setOnClickListener {
+            val inputPlanId = etCode.text.toString().trim()
+            if (inputPlanId.isEmpty()) {
+                Toast.makeText(context, "请输入PlanId", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 调用接口校验PlanId是否有效
+            validatePlanId(inputPlanId)
+        }
+    }
+
+    /**
+     * 校验PlanId有效性：调用fetchTravelPlanByPlanId接口
+     */
+    private fun validatePlanId(planId: String) {
+        // 显示加载状态（可选，优化体验）
+        btnConfirm.isEnabled = false
+        btnConfirm.text = "验证中..."
+
+        uploader.fetchTravelPlanByPlanId(planId, object : TravelPlanUploader.FetchCallback {
+            override fun onSuccess(plan: TravelPlan) {
+                // PlanId有效：关闭弹窗并回调成功（可通过接口传递plan数据）
+                Toast.makeText(context, "PlanId有效：${plan.title}", Toast.LENGTH_SHORT).show()
+                // 传递planId到CreateTripActivity
+                val intent = Intent(requireContext(), CreateTripActivity::class.java).apply {
+                    putExtra("TARGET_PLAN_ID", plan.planId) // 存储目标planId
+                }
+                startActivity(intent)
+                dismiss()
+                btnConfirm.isEnabled = true
+                btnConfirm.text = "确认"
+
+            }
+
+            override fun onFailure(errorMsg: String) {
+                // PlanId无效：提示错误
+                Toast.makeText(context, "PlanId无效：$errorMsg", Toast.LENGTH_SHORT).show()
+                btnConfirm.isEnabled = true
+                btnConfirm.text = "确认"
+            }
+
+        })
+    }
+
+
+    /*
+    // 3. 输入框自动格式化（4位+"-"）
         etCode.addTextChangedListener(object : TextWatcher {
             private var isEditing = false
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -128,7 +199,7 @@ class CollaborationCodeFragment : BottomSheetDialogFragment() {
                 Toast.makeText(context, "请输入正确格式（例：ABCD-1234）", Toast.LENGTH_SHORT).show()
             }
         }
-    }
+    }*/
 
     companion object {
         fun newInstance(): CollaborationCodeFragment {

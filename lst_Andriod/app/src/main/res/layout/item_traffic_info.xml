@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginVertical="2dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="6dp"
+        android:weightSum="3">
+
+        <!-- 公共交通项 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/amap_bus"
+                app:tint="@color/transit_color"
+                android:layout_marginEnd="2dp"/>
+
+            <TextView
+                android:id="@+id/tv_transit_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1小时20分"
+                android:textSize="12sp"
+                android:textColor="@color/transit_color"/>
+        </LinearLayout>
+
+        <!-- 驾车项 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/amap_car"
+                app:tint="@color/driving_color"
+                android:layout_marginEnd="2dp"/>
+
+            <TextView
+                android:id="@+id/tv_driving_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="40分"
+                android:textSize="12sp"
+                android:textColor="@color/driving_color"/>
+        </LinearLayout>
+
+        <!-- 距离项 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/amap_man"
+                app:tint="@color/distance_color"
+                android:layout_marginEnd="2dp"/>
+
+            <TextView
+                android:id="@+id/tv_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15公里"
+                android:textSize="12sp"
+                android:textColor="@color/distance_color"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

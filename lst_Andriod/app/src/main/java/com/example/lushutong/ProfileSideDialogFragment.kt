@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.llw.newmapdemo.R
+import android.content.Intent
 // 左侧个人信息弹窗 Fragment
 class ProfileSideDialogFragment : DialogFragment() {
 
@@ -33,7 +34,11 @@ class ProfileSideDialogFragment : DialogFragment() {
     private fun setupClickListeners(view: View) {
         // 我的旅行计划
         view.findViewById<View>(R.id.ll_my_trips).setOnClickListener {
-            Toast.makeText(requireContext(), "我的旅行计划", Toast.LENGTH_SHORT).show()
+            // 1. 关闭当前弹窗
+            dismiss()
+            // 2. 启动新Activity
+            val intent = Intent(requireContext(), MyTripsActivity::class.java)
+            startActivity(intent)
         }
 
         // 已发布的旅行日志
@@ -60,18 +65,16 @@ class ProfileSideDialogFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        // 关键：配置弹窗样式（位置、宽度、背景透明度）
         dialog?.apply {
-            // 1. 设置弹窗位置：左侧对齐
             window?.setGravity(Gravity.START)
-            // 2. 设置弹窗宽度=屏幕宽度的70%，高度=全屏
-            val windowManager = requireActivity().windowManager
-            val screenWidth = windowManager.currentWindowMetrics.bounds.width()
-            val dialogWidth = (screenWidth * 0.7).toInt() // 70% 屏幕宽度（可调整比例）
+
+            // 兼容低版本的屏幕宽度获取
+            val displayMetrics = requireContext().resources.displayMetrics
+            val screenWidth = displayMetrics.widthPixels
+            val dialogWidth = (screenWidth * 0.7).toInt()
+
             window?.setLayout(dialogWidth, WindowManager.LayoutParams.MATCH_PARENT)
-            // 3. 设置背景半透明（右侧可看到主界面，点击右侧关闭）
-            window?.setDimAmount(0.5f) // 0-1 之间，0=完全透明，1=完全不透明
-            // 4. 去掉弹窗默认边框和阴影（可选，更美观）
+            window?.setDimAmount(0.5f)
             window?.setBackgroundDrawableResource(android.R.color.transparent)
         }
     }

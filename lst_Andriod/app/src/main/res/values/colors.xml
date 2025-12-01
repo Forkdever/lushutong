@@ -9,4 +9,11 @@
     <color name="gray">#EEEEEE</color> <!-- 对应 bg_gray 的背景色 -->
     <color name="text_gray">#999999</color> <!-- 行程待安排文字颜色 -->
     <color name="yellow">#FFC107</color> <!-- 新增yellow颜色定义 -->
+    <color name="transit_color">#00B42A</color>   <!-- 公共交通-绿色 -->
+    <color name="driving_color">#FF7D00</color>  <!-- 驾车-橙色 -->
+    <color name="distance_color">#722ED1</color> <!-- 距离-紫色 -->
+    <color name="card_bg">#FFFFFF</color>       <!-- 卡片背景 -->
+    <color name="primary_teal">#0AB4A0</color>  <!-- 匹配目标界面主色 -->
+    <color name="primary_teal_light">#0FE5D1</color>  <!-- 主色浅色渐变 -->
+    <color name="primary_teal_dark">#089A8C</color>   <!-- 主色深色渐变 -->
 </resources>

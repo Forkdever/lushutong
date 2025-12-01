@@ -47,32 +47,31 @@ public class WeatherService {
      * @param callback 结果回调
      */
     public void queryWeather(String cityName, String date, WeatherCallback callback) {
-        // 在新线程中执行网络请求（Android不允许在主线程进行网络操作）
         new Thread(() -> {
             try {
                 WeatherData weatherData;
+                Log.d("WeatherQuery", "开始查询天气：城市=" + cityName + "，日期=" + date);
 
                 if (date == null || date.isEmpty() || isToday(date)) {
-                    // 查询实时天气
+                    Log.d("WeatherQuery", "查询实时天气");
                     weatherData = getLiveWeather(cityName);
                 } else {
-                    // 查询预报天气
+                    Log.d("WeatherQuery", "查询预报天气");
                     weatherData = getForecastWeather(cityName, date);
                 }
 
                 if (weatherData != null) {
-                    // 生成穿衣建议
                     String dressAdvice = generateDressAdvice(weatherData);
                     weatherData.setDressAdvice(dressAdvice);
-
-                    // 回调成功
                     callback.onSuccess(weatherData);
+                    Log.d("WeatherQuery", "天气查询成功");
                 } else {
-                    callback.onFailure("获取天气数据失败");
+                    Log.e("WeatherQuery", "getLiveWeather/getForecastWeather返回null");
+                    callback.onFailure("获取天气数据失败：接口返回空");
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e("WeatherQuery", "天气查询异常", e); // 打印完整异常栈
                 callback.onFailure("天气查询异常: " + e.getMessage());
             }
         }).start();

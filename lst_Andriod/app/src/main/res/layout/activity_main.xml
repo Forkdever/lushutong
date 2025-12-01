@@ -5,69 +5,105 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#E6F7F0"
+    tools:context="com.example.lushutong.MainActivity">
 
-    <Button
+    <!-- 创建行程按钮：深青绿渐变 -->
+    <android.widget.Button
         android:id="@+id/button_CreateItinerary"
         android:layout_width="184dp"
         android:layout_height="88dp"
         android:layout_marginTop="212dp"
+        android:background="@drawable/btn_gradient_deep_green"
         android:text="创建行程"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <!-- 加入协作按钮：浅青绿渐变 -->
+    <android.widget.Button
         android:id="@+id/button_JoinTogether"
         android:layout_width="184dp"
         android:layout_height="88dp"
         android:layout_marginTop="416dp"
         android:text="加入协作"
+        android:background="@drawable/btn_gradient_deep_green"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <!-- 底部主页按钮：青绿色（主色调） -->
+    <android.widget.Button
         android:id="@+id/button_Main_in_Main"
         android:layout_width="205dp"
         android:layout_height="92dp"
+        android:backgroundTint="@null"
         android:layout_marginEnd="2dp"
-        android:background="@drawable/btn_rectangle"
+        android:background="#26A69A"
         android:text="主页"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_Community_in_Main"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <!-- 底部社区按钮：稍深的青绿色（同色系） -->
+    <android.widget.Button
         android:id="@+id/button_Community_in_Main"
         android:layout_width="204dp"
         android:layout_height="92dp"
-        android:background="@drawable/btn_rectangle"
+        android:background="#4DB6AC"
         android:text="社区"
+        android:backgroundTint="@null"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
+    <!-- 顶部标题栏背景 -->
+    <View
         android:id="@+id/imageView_title"
-        android:layout_width="413dp"
+        android:layout_width="match_parent"
         android:layout_height="89dp"
+        android:background="#0AB4A0"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bg"
-        android:clickable="true"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
+    <!-- 顶部标题栏文字：路书通（居中显示） -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="路书通"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@+id/imageView_title"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_title"
+        app:layout_constraintStart_toStartOf="@+id/imageView_title"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_title"/>
+
+    <!-- 用户头像 -->
     <ImageView
         android:id="@+id/imageView_user_in_Main"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="#FFFFFF"
+        android:padding="2dp"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/bg" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

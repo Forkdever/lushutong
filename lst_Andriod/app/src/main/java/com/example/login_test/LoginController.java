@@ -62,8 +62,6 @@ public class LoginController {
      * 绑定布局文件中的控件，并设置初始属性
      */
     private void initViews() {
-        // 通过ID获取布局中的UI组件
-        tvUserList = activity.findViewById(R.id.t1);
         etPhoneNumber = activity.findViewById(R.id.reviseText);
         etPassword = activity.findViewById(R.id.msg);
         btnLogin = activity.findViewById(R.id.revise);

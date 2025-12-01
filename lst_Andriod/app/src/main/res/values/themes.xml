@@ -1,8 +1,15 @@
+<!-- res/values/styles.xml -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.Lushutong" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- 其他主题配置... -->
+        <!-- 给Button设置自定义样式，覆盖默认 -->
+        <item name="buttonStyle">@style/CustomButtonStyle</item>
+    </style>
+
+    <!-- 自定义按钮样式：禁用默认背景和着色 -->
+    <style name="CustomButtonStyle" parent="Widget.Material3.Button">
+        <item name="android:background">@null</item> <!-- 清除默认背景 -->
+        <item name="backgroundTint">@null</item>    <!-- 清除默认着色 -->
     </style>
 
     <style name="Theme.Lushutong" parent="Base.Theme.Lushutong" />

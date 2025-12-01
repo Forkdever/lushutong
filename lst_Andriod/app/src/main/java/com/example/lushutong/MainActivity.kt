@@ -12,9 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.llw.newmapdemo.R
+
 class MainActivity : AppCompatActivity(), ProfileSideDialogFragment.OnProfileInteractionListener {
     // 登录结果回调
     private lateinit var loginResultLauncher: ActivityResultLauncher<Intent>
+    // 头像ImageView（全局变量，方便多处调用）
+    private var ivAvatar: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +31,8 @@ class MainActivity : AppCompatActivity(), ProfileSideDialogFragment.OnProfileInt
         loginResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show()
+                // 登录成功：更新头像为bg.png
+                updateAvatarByLoginStatus()
             }
         }
 
@@ -49,10 +54,13 @@ class MainActivity : AppCompatActivity(), ProfileSideDialogFragment.OnProfileInt
             startActivity(intent)
         }
 
-        // 头像点击逻辑
-        val ivAvatar: ImageView? = findViewById(R.id.imageView_user_in_Main)
-        ivAvatar?.setOnClickListener {
+        // 初始化头像ImageView
+        ivAvatar = findViewById(R.id.imageView_user_in_Main)
+        // 初始加载：根据登录状态设置头像
+        updateAvatarByLoginStatus()
 
+        // 头像点击逻辑
+        ivAvatar?.setOnClickListener {
             // 检查登录状态
             if (LoginStatusManager.isLoggedIn()) {
                 // 已登录，打开侧边栏
@@ -85,5 +93,22 @@ class MainActivity : AppCompatActivity(), ProfileSideDialogFragment.OnProfileInt
     // 实现退出登录回调
     override fun onLogout() {
         Toast.makeText(this, "用户已退出登录", Toast.LENGTH_SHORT).show()
+        // 退出登录：更新头像为downloaded_image.png
+        updateAvatarByLoginStatus()
+    }
+
+    /**
+     * 根据登录状态更新头像图片
+     */
+    private fun updateAvatarByLoginStatus() {
+        ivAvatar?.let { avatar ->
+            if (LoginStatusManager.isLoggedIn()) {
+                // 已登录：显示bg.png
+                avatar.setImageResource(R.drawable.bg)
+            } else {
+                // 未登录：显示downloaded_image.png
+                avatar.setImageResource(R.drawable.downloaded_image)
+            }
+        }
     }
 }

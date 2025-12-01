@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- 必须是青绿色渐变，而非紫色 -->
+    <gradient
+        android:startColor="#089789"
+    android:endColor="#0AB4A0"
+    android:angle="90"/>
+    <corners android:radius="12dp"/> <!-- 圆角可选 -->
+</shape>

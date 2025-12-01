@@ -97,13 +97,6 @@ class TravelActivity : AppCompatActivity() {
             val returnDate = etReturnDate.text.toString().trim()
             val otherDemand = etOtherDemand.text.toString().trim()
 
-            // 基本验证（可选）
-            // if (departure.isEmpty() || destination.isEmpty() || departureDate.isEmpty() || returnDate.isEmpty()) {
-            //     Toast.makeText(this@TravelActivity, "出发地、目的地、出发日期、回程日期不能为空！", Toast.LENGTH_SHORT).show()
-            //     btnSubmit.isEnabled = true
-            //     return@setOnClickListener
-            // }
-
             // 合并标签选择和其他需求
             val allPreferences = mutableListOf<String>()
             allPreferences.addAll(selectedTags)
@@ -111,7 +104,7 @@ class TravelActivity : AppCompatActivity() {
                 allPreferences.add(otherDemand)
             }
 
-            // 发送数据到云服务器
+            // 发送数据到云服务器（异步操作）
             generateTravelPlan(
                 departure = departure,
                 destination = destination,
@@ -120,16 +113,8 @@ class TravelActivity : AppCompatActivity() {
                 preferences = allPreferences,
                 otherDemand = otherDemand
             )
-            val intent = Intent(this, CreateTripActivity::class.java)
-            // （可选）如果需要传递数据，可添加Extra
-            // intent.putExtra("key", "value")
-            // 启动Activity
-            startActivity(intent)
-        }
-
-        // 返回按钮逻辑
-        btnBack.setOnClickListener {
-            finish()
+            // 【删除原来的】val intent = Intent(this, CreateTripActivity::class.java)
+            // 【删除原来的】startActivity(intent)
         }
     }
 
@@ -142,10 +127,16 @@ class TravelActivity : AppCompatActivity() {
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        DatePickerDialog(this@TravelActivity, { _, selectYear, selectMonth, selectDay ->
-            val dateStr = "$selectYear-${selectMonth + 1}-$selectDay"
-            onDateSelected(dateStr)
-        }, year, month, day).show()
+        // 使用自定义主题创建DatePickerDialog（关键修改）
+        DatePickerDialog(
+            this@TravelActivity,
+            R.style.CustomDatePickerTheme, // 应用自定义主题
+            { _, selectYear, selectMonth, selectDay ->
+                val dateStr = "$selectYear-${selectMonth + 1}-$selectDay"
+                onDateSelected(dateStr)
+            },
+            year, month, day
+        ).show()
     }
 
     /**
@@ -197,6 +188,20 @@ class TravelActivity : AppCompatActivity() {
                 showError("生成旅行计划失败，请重试")
             }
         ) {
+            // ========== 新增：指定UTF-8编码解析响应 ==========
+            override fun parseNetworkResponse(response: com.android.volley.NetworkResponse): com.android.volley.Response<String> {
+                return try {
+                    // 用UTF-8解码响应数据
+                    val utf8String = String(response.data, Charsets.UTF_8)
+                    com.android.volley.Response.success(
+                        utf8String,
+                        com.android.volley.toolbox.HttpHeaderParser.parseCacheHeaders(response)
+                    )
+                } catch (e: java.io.UnsupportedEncodingException) {
+                    com.android.volley.Response.error(com.android.volley.ParseError(e))
+                }
+            }
+
             override fun getBodyContentType(): String {
                 return "application/json; charset=utf-8"
             }
@@ -209,7 +214,7 @@ class TravelActivity : AppCompatActivity() {
 
         // 设置重试策略
         stringRequest.retryPolicy = DefaultRetryPolicy(
-            30000, // 30秒超时
+            300000, // 30秒超时
             0, // 不重试
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         )
@@ -229,6 +234,12 @@ class TravelActivity : AppCompatActivity() {
         // 显示成功提示
         Toast.makeText(this@TravelActivity, "旅行计划生成成功！", Toast.LENGTH_LONG).show()
 
+        // 传递Markdown数据并启动CreateTripActivity
+        val intent = Intent(this, CreateTripActivity::class.java)
+        intent.putExtra("TRAVEL_PLAN_MARKDOWN", markdownPlan) // 传递Markdown内容
+        intent.putExtra("TRIP_DESTINATION", etDestination.text.toString().trim()) // 可选：传递目的地
+        intent.putExtra("TRIP_DEPARTURE_DATE", etDepartureDate.text.toString().trim()) // 新增：传递出发日期
+        startActivity(intent)
     }
 
     /**

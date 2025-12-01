@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 其他主题配置... -->
+
+    <!-- 自定义DatePickerDialog主题（适配青绿色） -->
+    <style name="CustomDatePickerTheme" parent="Theme.Material3.Light.Dialog">
+        <!-- 主色（青绿色） -->
+        <item name="colorPrimary">#0AB4A0</item>
+        <!-- 选中日期的颜色（深青绿） -->
+        <item name="colorAccent">#089789</item>
+        <!-- 标题栏背景色 -->
+        <item name="colorPrimaryContainer">#E6F7F0</item>
+        <!-- 标题文字颜色 -->
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <!-- 日历控件样式 -->
+        <item name="android:datePickerStyle">@style/CustomDatePickerStyle</item>
+    </style>
+
+    <!-- 自定义日历控件样式 -->
+    <style name="CustomDatePickerStyle" parent="android:Widget.Material.DatePicker">
+        <!-- 选中日期的高亮颜色 -->
+        <item name="colorControlActivated">#0AB4A0</item>
+        <!-- 今天日期的颜色 -->
+        <item name="colorControlHighlight">#36CFC9</item>
+        <!-- 日历文字颜色 -->
+        <item name="android:textColorPrimary">#2D3748</item>
+    </style>
+</resources>
