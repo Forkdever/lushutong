@@ -52,6 +52,9 @@ import androidx.core.view.WindowInsetsControllerCompat
 import android.view.Window
 import android.content.Context
 import androidx.core.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import android.content.ClipData
+import android.content.ClipboardManager
 
 // 待安排地点数据类
 data class PendingPlace(
@@ -1287,7 +1290,9 @@ class CreateTripActivity : AppCompatActivity() {
                 showMarkdownDialog()
             }
             // 保存按钮（手动触发上传）
-
+            findViewById<ImageView>(R.id.iv_share)?.setOnClickListener {
+                showShareBottomSheet()
+            }
             // 添加天数
             findViewById<ImageView>(R.id.iv_add_day)?.setOnClickListener {
                 if (it.isClickable) {
@@ -2285,11 +2290,10 @@ class CreateTripActivity : AppCompatActivity() {
             // 填充景点数据
             attractions.forEachIndexed { idx, attraction ->
                 val timeTag = when (idx % 3) { 0 -> "上午"; 1 -> "下午"; else -> "晚上" }
-                val address = getAttractionAddress(attraction)
                 dayItinerary.places.add(
                     PendingPlace(
                         name = attraction,
-                        address = address,
+                        address = attraction,
                         rating = "4.7",
                         tag1 = timeTag,
                         tag2 = "三亚",
@@ -2300,16 +2304,67 @@ class CreateTripActivity : AppCompatActivity() {
             dayItineraries.add(dayItinerary)
         }
     }
-    private fun getAttractionAddress(attraction: String): String {
-        return when (attraction) {
-            "三亚湾" -> "海南省三亚市三亚湾路"
-            "第一市场" -> "海南省三亚市天涯区新建街155号"
-            "解放路步行街" -> "海南省三亚市天涯区解放路"
-            "蜈支洲岛" -> "海南省三亚市海棠区蜈支洲岛"
-            "海棠湾免税城" -> "海南省三亚市海棠区海棠湾镇"
-            "呀诺达热带雨林" -> "海南省三亚市保亭县三道镇"
-            "鹿回头风景区" -> "海南省三亚市吉阳区鹿岭路"
-            else -> "海南省三亚市$attraction"
+    private fun showShareBottomSheet() {
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_share_bottom, null)
+        bottomSheetDialog.setContentView(view)
+
+        // 复制协作码按钮
+        view.findViewById<Button>(R.id.btn_copy_code)?.setOnClickListener {
+            copyToClipboard("协作码", currentPlanId)
+            bottomSheetDialog.dismiss()
+            Toast.makeText(this, "协作码已复制到剪贴板", Toast.LENGTH_SHORT).show()
         }
+
+        // 复制行程按钮
+        view.findViewById<Button>(R.id.btn_copy_trip)?.setOnClickListener {
+            val tripContent = buildTripContent()
+            copyToClipboard("行程信息", tripContent)
+            bottomSheetDialog.dismiss()
+            Toast.makeText(this, "行程信息已复制到剪贴板", Toast.LENGTH_SHORT).show()
+        }
+
+        // 设置弹窗从底部弹出
+        bottomSheetDialog.behavior.isDraggable = true
+        bottomSheetDialog.show()
+    }
+    private fun copyToClipboard(label: String, content: String) {
+        val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText(label, content)
+        clipboardManager.setPrimaryClip(clipData)
+    }
+    private fun buildTripContent(): String {
+        val tripName = etTripName.text.toString().takeIf { it.isNotEmpty() } ?: "未命名行程"
+        val startDate = etTripDate.text.toString().takeIf { it.isNotEmpty() } ?: sdf.format(Date())
+        val destination = getDestinationFromItinerary() ?: "未知城市"
+
+        val sb = StringBuilder()
+        sb.appendLine("📅 行程名称：$tripName")
+        sb.appendLine("🗓️ 出发日期：$startDate")
+        sb.appendLine("📍 目的地：$destination")
+        sb.appendLine("📝 总天数：${dayCount}天")
+        sb.appendLine("———————————————")
+
+        // 添加每日行程详情
+        val sortedDays = dayItineraries.sortedBy { it.dayNumber }
+        sortedDays.forEach { dayItinerary ->
+            if (dayItinerary.dayNumber == 0) {
+                sb.appendLine("\n⏳ 待安排地点：")
+            } else {
+                sb.appendLine("\n📌 第${dayItinerary.dayNumber}天：")
+            }
+
+            if (dayItinerary.places.isNotEmpty()) {
+                dayItinerary.places.forEachIndexed { index, place ->
+                    sb.appendLine("  ${index + 1}. ${place.name}（${place.tag1}/${place.tag2}）")
+                }
+            } else {
+                sb.appendLine("  暂无安排")
+            }
+        }
+
+        // 添加协作码
+        sb.appendLine("\n🔗 协作码：$currentPlanId")
+        return sb.toString()
     }
 }

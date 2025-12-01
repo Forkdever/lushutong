@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -12,9 +15,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.llw.newmapdemo.R
-class CommunityActivity : AppCompatActivity() {
+import com.example.lushutong.LoginStatusManager  // 确保导入登录状态管理类
+import com.example.lushutong.ProfileSideDialogFragment  // 导入侧边栏Fragment
+import com.example.lushutong.LoginActivity  // 导入登录Activity
+
+class CommunityActivity : AppCompatActivity(), ProfileSideDialogFragment.OnProfileInteractionListener {
     private lateinit var rvPosts: RecyclerView
     private lateinit var postAdapter: PostAdapter
+
+    // 新增：登录结果回调
+    private lateinit var loginResultLauncher: ActivityResultLauncher<Intent>
+    // 新增：社区头像ImageView（全局变量）
+    private var ivAvatar: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +38,18 @@ class CommunityActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        // 新增：初始化登录状态管理
+        LoginStatusManager.init(this)
+
+        // 新增：注册登录结果回调（和主页一致）
+        loginResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show()
+                // 登录成功：更新头像
+                updateAvatarByLoginStatus()
+            }
         }
 
         // 初始化帖子列表
@@ -40,13 +64,37 @@ class CommunityActivity : AppCompatActivity() {
         // 悬浮按钮点击事件
         val fabPost: FloatingActionButton = findViewById(R.id.fab_post)
         fabPost.setOnClickListener {
-            // 发布帖子逻辑
+            // 发布帖子逻辑：先检查登录状态
+            if (LoginStatusManager.isLoggedIn()) {
+                // 已登录，执行发布逻辑
+                Toast.makeText(this, "进入发布帖子页面", Toast.LENGTH_SHORT).show()
+            } else {
+                // 未登录，跳转到登录页
+                val intent = Intent(this, LoginActivity::class.java)
+                loginResultLauncher.launch(intent)
+            }
         }
 
-        // 用户头像点击事件
-        val ivAvatar: ImageView = findViewById(R.id.imageView_user_in_Community)
-        ivAvatar.setOnClickListener {
-            // 个人中心逻辑
+        // 新增：初始化社区头像ImageView
+        ivAvatar = findViewById(R.id.imageView_user_in_Community)
+        // 新增：初始加载头像（根据登录状态）
+        updateAvatarByLoginStatus()
+
+        // 新增：社区头像点击事件（和主页逻辑一致）
+        ivAvatar?.setOnClickListener {
+            if (LoginStatusManager.isLoggedIn()) {
+                // 已登录，打开侧边栏
+                try {
+                    val sideDialog = ProfileSideDialogFragment.newInstance()
+                    sideDialog.show(supportFragmentManager, "ProfileSideDialog")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            } else {
+                // 未登录，跳转到登录界面
+                val intent = Intent(this, LoginActivity::class.java)
+                loginResultLauncher.launch(intent)
+            }
         }
     }
 
@@ -106,5 +154,25 @@ class CommunityActivity : AppCompatActivity() {
                 shareCount = 320
             )
         )
+    }
+
+    // 新增：根据登录状态更新头像（和主页完全一致）
+    private fun updateAvatarByLoginStatus() {
+        ivAvatar?.let { avatar ->
+            if (LoginStatusManager.isLoggedIn()) {
+                // 已登录：显示bg.png
+                avatar.setImageResource(R.drawable.bg)
+            } else {
+                // 未登录：显示downloaded_image.png
+                avatar.setImageResource(R.drawable.downloaded_image)
+            }
+        }
+    }
+
+    // 新增：实现退出登录回调（和主页一致）
+    override fun onLogout() {
+        Toast.makeText(this, "用户已退出登录", Toast.LENGTH_SHORT).show()
+        // 退出登录后更新头像
+        updateAvatarByLoginStatus()
     }
 }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 外层添加圆角和阴影，增强悬浮感 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_share_card"
+    android:padding="16dp">
+
+    <!-- 标题栏：添加底部分割线，文字色与主色调匹配 -->
+<TextView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="分享选项"
+android:textSize="18sp"
+android:textStyle="bold"
+android:gravity="center"
+android:paddingBottom="12dp"
+android:textColor="#0A9EAD"
+    android:layout_marginBottom="12dp"/>
+
+    <!-- 分割线：细线条呼应图片中的地图线条元素 -->
+<View
+android:layout_width="match_parent"
+android:layout_height="1dp"
+android:background="#E8F4F5"
+    android:layout_marginBottom="16dp"/>
+
+    <!-- 按钮容器：调整间距，优化按钮样式 -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:gravity="center"
+android:layout_marginHorizontal="8dp">  <!-- 左右留边，避免太满 -->
+
+<!-- 复制协作码按钮：选中态用蓝绿色渐变 -->
+<android.widget.Button
+    android:id="@+id/btn_copy_code"
+    android:layout_width="0dp"
+    android:layout_height="48dp"
+    android:layout_weight="1"
+    android:text="复制协作码"
+    android:textSize="16sp"
+    android:layout_marginEnd="12dp"
+    android:background="@drawable/btn_share_selected"
+    android:textColor="@android:color/white"
+    android:stateListAnimator="@animator/btn_press_anim"
+    android:singleLine="true"/>
+
+<!-- 复制行程按钮：未选中态用浅灰蓝 -->
+<android.widget.Button
+    android:id="@+id/btn_copy_trip"
+    android:layout_width="0dp"
+    android:layout_height="48dp"
+    android:layout_weight="1"
+    android:text="复制行程"
+    android:textSize="16sp"
+    android:layout_marginStart="12dp"
+    android:background="@drawable/btn_share_unselected"
+    android:textColor="#0A9EAD"
+    android:stateListAnimator="@animator/btn_press_anim"
+    android:singleLine="true"/>
+</LinearLayout>
+
+    </LinearLayout>

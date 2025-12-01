@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="12dp"/>  <!-- 与整体圆角统一 -->
+    <solid android:color="#FFFFFF"/>
+</shape>
